@@ -1,0 +1,27 @@
+<main>
+    <h2 class="subtitulo">Próximas Scrims  <%= link_to "Meus convites", invites_path(), class: 'btn btn-primary' %></h2> 
+    <% @teams.each do |team| -%>
+        <% team.team_scrims.each do |team_scrim| -%>
+            <% if team_scrim.scrim.team_scrim_ids.count == 2 -%>
+            <div class="container-padrao container-equipes container-busca-equipes">
+                <ul class="times-scrim">
+                    <li> <%= team_scrim.scrim.team_scrims[0].team.name %></li>
+                    <li>vs</li>
+                    <li> <%= team_scrim.scrim.team_scrims[1].team.name %></li>
+                    <li> <%= team_scrim.scrim.date %></li>
+                    <li> <%= team_scrim.scrim.time.strftime("%H:%M") %></li>
+                    <li><%= link_to "Enviar Mensagem", "", class: 'btn btn-primary' %></li>
+                    <% 
+                        msg = "Ola, temos uma scrim marcada as #{team_scrim.scrim.time.strftime("%H:%M")}, do dia #{team_scrim.scrim.date}, contra: #{team_scrim.scrim.team_scrims[1].team.name}"
+                    -%>
+                    <li><a class="btn btn-primary" href="whatsapp://send?text=<%= msg %>">Compatilhar essa scrim</a></li>
+                    <li><%= link_to "Avaliar Scrim", new_evaluation_path(team_scrim.id), class: 'btn btn-primary' %></li>
+                    
+                </ul>
+            </div>
+            <% end -%>
+        <% end -%>
+    <% end -%>
+</main>
+
+<%= render "components/menu" %>
